@@ -1,19 +1,13 @@
 package main
 
 import (
-	"errors"
 	"net/url"
 	"strings"
 
 	"golang.org/x/net/html"
 )
 
-func getURLsFromHTML(htmlBody, rawBaseURL string) ([]string, error) {
-
-	base, err := url.Parse(strings.TrimSpace(rawBaseURL))
-	if err != nil || base.Scheme == "" || base.Host == "" {
-		return nil, errors.New("invalid base URL")
-	}
+func getURLsFromHTML(htmlBody string, base *url.URL) ([]string, error) {
 
 	node, err := html.Parse(strings.NewReader(htmlBody))
 	if err != nil {
